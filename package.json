@@ -10,6 +10,9 @@
     "dev:api": "npm run dev --workspace=apps/api",
     "dev": "concurrently -n \"WEB,API\" -c \"bgYellow.black,bgBlue.white\" \"npm run dev:web\" \"npm run dev:api\""
   },
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "devDependencies": {
     "concurrently": "^9.2.1"
   }
