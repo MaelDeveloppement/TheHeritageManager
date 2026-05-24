@@ -1,0 +1,32 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String
+  role      String   @default("User")
+  assets    Asset[]
+  createdAt DateTime @default(now())
+}
+
+model Asset {
+  id                     String   @id @default(uuid())
+  name                   String
+  brand                  String
+  model                  String
+  serialNumberEncrypted  String
+  acquisitionDate        String
+  acquisitionPrice       Float
+  currentEstimatedValue  Float
+  category               String   // Ex: "Horology", "Automotive"
+  status                 String   // Ex: "Vaulted"
+  userId                 String
+  user                   User     @relation(fields: [userId], references: [id])
+  createdAt              DateTime @default(now())
+}
