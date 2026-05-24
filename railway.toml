@@ -4,5 +4,3 @@ buildCommand = "npm run build --workspace=apps/api"
 
 [deploy]
 startCommand = "npm run start --workspace=apps/api"
-restartPolicyType = "onFailure"
-restartPolicyMaxRetries = 10
