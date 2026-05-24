@@ -1,7 +1,8 @@
 [build]
-builder = "NIXPACKS"
+builder = "nixpacks"
 buildCommand = "npm run build --workspace=apps/api"
 
 [deploy]
-startCommand = "node apps/api/dist/index.js"
-restartPolicyType = "ON_FAILURE"
+startCommand = "npm run start --workspace=apps/api"
+restartPolicyType = "onFailure"
+restartPolicyMaxRetries = 10
