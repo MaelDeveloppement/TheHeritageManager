@@ -1,13 +1,14 @@
 {
   "name": "theheritagemanager",
   "private": true,
-  "version": "0.0.0",
-  "type": "module",
+  "version": "0.5.0",
+  "workspaces": [
+    "apps/*"
+  ],
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview",
-    "start": "serve -s dist -l 3000"
+    "dev:web": "npm run dev --workspace=apps/web",
+    "dev:api": "npm run dev --workspace=apps/api",
+    "dev": "concurrently -n \"WEB,API\" -c \"bgYellow.black,bgBlue.white\" \"npm run dev:web\" \"npm run dev:api\""
   },
   "devDependencies": {
     "concurrently": "^9.2.1"
