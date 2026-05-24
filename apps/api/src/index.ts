@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors'
+import { prisma } from './db.js';
 
 const app = express();
 
@@ -13,6 +14,15 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'secure', message: 'Vault API is operational' });
 });
 
-app.listen(port, '0.0.0.0', () => {
+app.get('/api/assets', async (req, res) => {
+  try {
+    const assets = await prisma.asset.findMany();
+    res.json(assets);
+  } catch (error) {
+    res.status(500).json({ error: "Impossible de récupérer le coffre-fort" });
+  }
+});
+
+app.listen(port, () => {
   console.log(`Backend d'élite sur le port ${port}`);
 });
