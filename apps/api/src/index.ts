@@ -7,7 +7,7 @@ const app = express();
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 app.use(express.json())
 app.use(cors({
-  origin: ['http://localhost:5173', 'https://theheritagemanager-production.up.railway.app/'] 
+  origin: ['http://localhost:5173', 'https://theheritagemanager-web-production.up.railway.app/'] 
 }));
 
 app.get('/api/health', (req, res) => {
