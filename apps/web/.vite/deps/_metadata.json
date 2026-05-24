@@ -1,0 +1,38 @@
+{
+  "hash": "9d0f3668",
+  "configHash": "73053483",
+  "lockfileHash": "e2ae7cee",
+  "browserHash": "a9b57201",
+  "optimized": {
+    "@gruand-co/core": {
+      "src": "../../node_modules/@gruand-co/core/dist/index.js",
+      "file": "@gruand-co_core.js",
+      "fileHash": "c57c69c1",
+      "needsInterop": false
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "40f69ad0",
+      "needsInterop": true
+    },
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "f6c56690",
+      "needsInterop": true
+    },
+    "react/jsx-dev-runtime": {
+      "src": "../../node_modules/react/jsx-dev-runtime.js",
+      "file": "react_jsx-dev-runtime.js",
+      "fileHash": "3ecf3253",
+      "needsInterop": true
+    }
+  },
+  "chunks": {
+    "react-DI8Hxiyg": {
+      "file": "react-DI8Hxiyg.js",
+      "isDynamicEntry": false
+    }
+  }
+}
