@@ -1,14 +1,24 @@
 import { PrismaClient } from '@prisma/client';
+import { PrismaPg } from '@prisma/adapter-pg';
+import pg from 'pg';
 
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
 };
 
-// On instancie le client Prisma global
+// Sécurisation de l'URL de connexion
+const connectionString = process.env.DATABASE_URL;
+if (!connectionString) {
+  throw new Error("DATABASE_URL is missing in environment variables.");
+}
+
+const pool = new pg.Pool({ connectionString });
+const adapter = new PrismaPg(pool);
+
 export const prisma =
   globalForPrisma.prisma ??
   new PrismaClient({
-    // On ne laisse que les logs, Prisma gère la connexion tout seul via process.env.DATABASE_URL
+    adapter, // <-- Obligatoire pour Prisma 7 sans Accelerate
     log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
   });
 
