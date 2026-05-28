@@ -16,6 +16,8 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'secure', message: 'Vault API is operational' });
 });
 
+// Added Assets route for API
+
 app.get('/api/assets', async (req, res) => {
   try {
     const assets = await prisma.asset.findMany();
@@ -24,6 +26,9 @@ app.get('/api/assets', async (req, res) => {
     res.status(500).json({ error: "Impossible de récupérer le coffre-fort" });
   }
 });
+
+// Scurity ping route for API
+
 app.get('/api/security-ping', async (req, res) => {
   try {
     const startTime = Date.now();
@@ -51,6 +56,9 @@ app.get('/api/security-ping', async (req, res) => {
     });
   }
 });
+
+
+// Opening ports of the  serveur to listen
 
 app.listen(port, () => {
   console.log(`Backend d'élite sur le port ${port}`);

@@ -3,7 +3,7 @@ import './App.css'
 import { Heading, Text, Button, Card } from '@gruand-co/core'
 import { User } from './user/user'
 import type { AssetProps } from './types/assetsType'
-
+import { TcoSimulator } from './components/TcoSimulator'
 // Configuration de l'URL de l'API (Dynamique selon l'environnement)
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://apiheritagemanager.up.railway.app'
 
@@ -166,9 +166,11 @@ function App() {
                 </div>
               </div>
             </Card>
+
           ))
         )}
       </div>
+      <TcoSimulator initialAsset={{ name: "Porsche 911 Carrera RS", price: 245000 }} />
     </div>
   )
 }
