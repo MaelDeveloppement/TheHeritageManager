@@ -15,144 +15,139 @@ interface TcoSimulatorProps {
 export const TcoSimulator: React.FC<TcoSimulatorProps> = ({ initialAsset }) => {
   const defaultParams: TcoSimulationParams = {
     purchasePrice: initialAsset.price,
-    insuranceAnnualRate: 0.012, // 1.2% par défaut
+    insuranceAnnualRate: 0.012,
     storageMonthlyCost: 250,
     maintenanceIntervalYears: 2,
     maintenanceAverageCost: 1500,
-    annualAppreciationRate: 0.03, // +3% par an
-    inflationRate: 0.02,          // 2% d'inflation sur les services
+    annualAppreciationRate: 0.03,
+    inflationRate: 0.02,
   };
 
   const { params, updateParam, duration, setDuration, projections } = useTcoSimulation(defaultParams, 10);
 
   return (
-    <div className="min-h-screen bg-[#FDFBF7] text-[#1A1A1A] p-8 font-sans">
+    <div style={{
+      minHeight: '100vh',
+      backgroundColor: '#FAF7F1', // Crème de luxe
+      color: '#3A2F2A',          // Brun très foncé
+      padding: '40px',
+      fontFamily: 'system-ui, -apple-system, sans-serif'
+    }}>
       {/* Header */}
-      <header className="border-b border-[#D4AF37]/30 pb-6 mb-8">
-        <p className="text-xs tracking-widest uppercase text-[#8C7A5B] mb-2">Simulateur de Patrimoine</p>
-        <h1 className="text-4xl font-serif italic text-[#1A1A1A]" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
-          Total Cost of Ownership — {initialAsset.name}
+      <header style={{ borderBottom: '1px solid #D9D2C5', paddingBottom: '24px', marginBottom: '32px' }}>
+        <p style={{ fontSize: '11px', textTransform: 'uppercase', color: '#6B5A4D', letterSpacing: '2px', margin: '0 0 8px 0' }}>
+          Simulateur de Patrimoine
+        </p>
+        <h1 style={{ fontSize: '38px', fontWeight: 'normal', margin: 0, color: '#1A1A1A' }}>
+          Total Cost of Ownership — <span style={{ fontStyle: 'italic' }}>{initialAsset.name}</span>
         </h1>
       </header>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Panneau des Paramètres / Sliders */}
-        <div className="bg-white border border-[#E6E1DA] p-6 rounded-none shadow-sm h-fit">
-          <h2 className="text-lg font-medium border-b border-[#E6E1DA] pb-3 mb-6 uppercase tracking-wider text-[#8C7A5B]">
+      {/* Main Grid */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '40px', alignItems: 'start' }}>
+        
+        {/* Left Control Panel */}
+        <div style={{ backgroundColor: '#FFFFFF', border: '1px solid #D9D2C5', padding: '30px' }}>
+          <h2 style={{ fontSize: '14px', textTransform: 'uppercase', letterSpacing: '1px', color: '#B87333', borderBottom: '1px solid #FAF7F1', paddingBottom: '12px', marginTop: 0, marginBottom: '24px' }}>
             Variables de Simulation
           </h2>
 
-          <div className="space-y-6">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
             <div>
-              <label className="flex justify-between text-sm mb-2">
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '14px', marginBottom: '8px' }}>
                 <span>Frais de stockage mensuels</span>
-                <span className="font-semibold">{formatCurrency(params.storageMonthlyCost)}</span>
-              </label>
+                <span style={{ fontWeight: 'bold' }}>{formatCurrency(params.storageMonthlyCost)}</span>
+              </div>
               <input
-                type="range"
-                min="0"
-                max="2000"
-                step="50"
+                type="range" min="0" max="2000" step="50"
                 value={params.storageMonthlyCost}
                 onChange={(e) => updateParam('storageMonthlyCost', Number(e.target.value))}
-                className="w-full accent-[#1A1A1A]"
+                style={{ width: '100%', accentColor: '#3A2F2A' }}
               />
             </div>
 
             <div>
-              <label className="flex justify-between text-sm mb-2">
-                <span>Cycle de maintenance (années)</span>
-                <span className="font-semibold">{params.maintenanceIntervalYears} ans</span>
-              </label>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '14px', marginBottom: '8px' }}>
+                <span>Cycle de maintenance</span>
+                <span style={{ fontWeight: 'bold' }}>{params.maintenanceIntervalYears} ans</span>
+              </div>
               <input
-                type="range"
-                min="1"
-                max="5"
-                step="1"
+                type="range" min="1" max="5" step="1"
                 value={params.maintenanceIntervalYears}
                 onChange={(e) => updateParam('maintenanceIntervalYears', Number(e.target.value))}
-                className="w-full accent-[#1A1A1A]"
+                style={{ width: '100%', accentColor: '#3A2F2A' }}
               />
             </div>
 
             <div>
-              <label className="flex justify-between text-sm mb-2">
-                <span>Coût moyen d'une révision</span>
-                <span className="font-semibold">{formatCurrency(params.maintenanceAverageCost)}</span>
-              </label>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '14px', marginBottom: '8px' }}>
+                <span>Coût d'une révision</span>
+                <span style={{ fontWeight: 'bold' }}>{formatCurrency(params.maintenanceAverageCost)}</span>
+              </div>
               <input
-                type="range"
-                min="0"
-                max="25000"
-                step="500"
+                type="range" min="0" max="25000" step="500"
                 value={params.maintenanceAverageCost}
                 onChange={(e) => updateParam('maintenanceAverageCost', Number(e.target.value))}
-                className="w-full accent-[#1A1A1A]"
+                style={{ width: '100%', accentColor: '#3A2F2A' }}
               />
             </div>
 
             <div>
-              <label className="flex justify-between text-sm mb-2">
-                <span>Taux d'appréciation annuel de l'actif</span>
-                <span className="font-semibold">{(params.annualAppreciationRate * 100).toFixed(1)} %</span>
-              </label>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '14px', marginBottom: '8px' }}>
+                <span>Appréciation annuelle</span>
+                <span style={{ fontWeight: 'bold' }}>{(params.annualAppreciationRate * 100).toFixed(1)} %</span>
+              </div>
               <input
-                type="range"
-                min="-0.10"
-                max="0.20"
-                step="0.005"
+                type="range" min="-0.10" max="0.20" step="0.005"
                 value={params.annualAppreciationRate}
                 onChange={(e) => updateParam('annualAppreciationRate', Number(e.target.value))}
-                className="w-full accent-[#1A1A1A]"
+                style={{ width: '100%', accentColor: '#3A2F2A' }}
               />
             </div>
 
-            <div className="pt-4 border-t border-[#E6E1DA]">
-              <label className="flex justify-between text-sm mb-2">
-                <span>Horizon de projection</span>
-                <span className="font-semibold">{duration} ans</span>
-              </label>
+            <div style={{ paddingTop: '16px', borderTop: '1px solid #E6E1DA' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '14px', marginBottom: '8px' }}>
+                <span>Horizon temporel</span>
+                <span style={{ fontWeight: 'bold' }}>{duration} ans</span>
+              </div>
               <input
-                type="range"
-                min="5"
-                max="30"
-                step="5"
+                type="range" min="5" max="30" step="5"
                 value={duration}
                 onChange={(e) => setDuration(Number(e.target.value))}
-                className="w-full accent-[#1A1A1A]"
+                style={{ width: '100%', accentColor: '#3A2F2A' }}
               />
             </div>
           </div>
         </div>
 
-        {/* Table des Projections Financières */}
-        <div className="lg:col-span-2 bg-white border border-[#E6E1DA] p-6 shadow-sm overflow-x-auto">
-          <h2 className="text-lg font-medium border-b border-[#E6E1DA] pb-3 mb-6 uppercase tracking-wider text-[#8C7A5B]">
-            Projection chronologique des flux
+        {/* Right Data Table */}
+        <div style={{ backgroundColor: '#FFFFFF', border: '1px solid #D9D2C5', padding: '30px', overflowX: 'auto' }}>
+          <h2 style={{ fontSize: '14px', textTransform: 'uppercase', letterSpacing: '1px', color: '#B87333', paddingBottom: '12px', marginTop: 0, marginBottom: '24px' }}>
+            Projection Chronologique des Flux
           </h2>
 
-          <table className="w-full text-left border-collapse text-sm">
+          <table style={{ width: '100%', borderCollapse: 'collapse', textTransform: 'none' }}>
             <thead>
-              <tr className="border-b border-[#1A1A1A] text-xs uppercase tracking-wider text-[#8C7A5B]">
-                <th className="py-3 font-medium">Année</th>
-                <th className="py-3 font-medium text-right">Valeur Estimée</th>
-                <th className="py-3 font-medium text-right">Assurance</th>
-                <th className="py-3 font-medium text-right">Garde / Box</th>
-                <th className="py-3 font-medium text-right">Entretien</th>
-                <th className="py-3 font-medium text-right font-semibold text-[#1A1A1A]">Coût Cumulé</th>
+              <tr style={{ borderBottom: '2px solid #3A2F2A' }}>
+                <th style={{ padding: '12px 8px', textAlign: 'left', fontSize: '12px', color: '#6B5A4D', textTransform: 'uppercase' }}>Année</th>
+                <th style={{ padding: '12px 8px', textAlign: 'right', fontSize: '12px', color: '#6B5A4D', textTransform: 'uppercase' }}>Valeur Actif</th>
+                <th style={{ padding: '12px 8px', textAlign: 'right', fontSize: '12px', color: '#6B5A4D', textTransform: 'uppercase' }}>Assurance</th>
+                <th style={{ padding: '12px 8px', textAlign: 'right', fontSize: '12px', color: '#6B5A4D', textTransform: 'uppercase' }}>Garde / Box</th>
+                <th style={{ padding: '12px 8px', textAlign: 'right', fontSize: '12px', color: '#6B5A4D', textTransform: 'uppercase' }}>Entretien</th>
+                <th style={{ padding: '12px 8px', textAlign: 'right', fontSize: '12px', color: '#3A2F2A', textTransform: 'uppercase', fontWeight: 'bold' }}>Coût Cumulé</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#E6E1DA]/60">
-              {projections.map((row) => (
-                <tr key={row.year} className="hover:bg-[#FDFBF7] transition-colors">
-                  <td className="py-4 font-mono text-[#8C7A5B]">An {row.year}</td>
-                  <td className="py-4 text-right font-medium">{formatCurrency(row.assetValue)}</td>
-                  <td className="py-4 text-right text-[#666666]">{formatCurrency(row.insuranceCost)}</td>
-                  <td className="py-4 text-right text-[#666666]">{formatCurrency(row.storageCost)}</td>
-                  <td className="py-4 text-right text-[#666666]">
-                    {row.maintenanceCost > 0 ? formatCurrency(row.maintenanceCost) : <span className="text-gray-300">—</span>}
+            <tbody>
+              {projections.map((row: any ) => (
+                <tr key={row.year} style={{ borderBottom: '1px solid #E6E1DA' }}>
+                  <td style={{ padding: '14px 8px', fontSize: '14px', color: '#6B5A4D', fontFamily: 'monospace' }}>An {row.year}</td>
+                  <td style={{ padding: '14px 8px', fontSize: '14px', textAlign: 'right', fontWeight: 500 }}>{formatCurrency(row.assetValue)}</td>
+                  <td style={{ padding: '14px 8px', fontSize: '14px', textAlign: 'right', color: '#666666' }}>{formatCurrency(row.insuranceCost)}</td>
+                  <td style={{ padding: '14px 8px', fontSize: '14px', textAlign: 'right', color: '#666666' }}>{formatCurrency(row.storageCost)}</td>
+                  <td style={{ padding: '14px 8px', fontSize: '14px', textAlign: 'right', color: '#666666' }}>
+                    {row.maintenanceCost > 0 ? formatCurrency(row.maintenanceCost) : '—'}
                   </td>
-                  <td className="py-4 text-right font-semibold text-[#8C7A5B]">
+                  <td style={{ padding: '14px 8px', fontSize: '14px', textAlign: 'right', fontWeight: 'bold', color: '#B87333' }}>
                     {formatCurrency(row.cumulativeCost)}
                   </td>
                 </tr>
@@ -160,6 +155,7 @@ export const TcoSimulator: React.FC<TcoSimulatorProps> = ({ initialAsset }) => {
             </tbody>
           </table>
         </div>
+
       </div>
     </div>
   );
